@@ -4,6 +4,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/slack-webhook-verify', (req, res) => {
+  console.log(req.body);
   res.status(200).json({ challenge: req.body.challenge });
 });
 
