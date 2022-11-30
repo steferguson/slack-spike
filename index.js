@@ -22,7 +22,7 @@ app.post('/slack-command-register', (req, res) => {
   console.log(req);
   console.log(req.body);
 
-  res.status(200).json({ msg: 'yes' });
+  res.status(200).send('Thank you for registering!');
 });
 
 app.all('/', (req, res) => {
