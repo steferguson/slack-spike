@@ -67,3 +67,15 @@ event: {
 },
 ...
 ```
+
+## Account binding with app
+
+Following [template-account-binding](https://github.com/slackapi/template-account-binding) repo.
+
+Go to [your apps](https://api.slack.com/apps) page displays all apps and allow you to create a new one.
+
+`Create New App` -> `From Scratch`
+
+name `binding-account-spike` and deploy to `test-realm` workspace.
+
+With app id, you can visit [app detail page](https://api.slack.com/apps/A04D5J7REJG) which allows you to edit permissions
