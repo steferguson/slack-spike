@@ -4,9 +4,13 @@ const app = express();
 app.use(express.json());
 
 app.post('/slack-webhook-verify', (req, res) => {
-  console.log('Hello we are no logging stuff');
+  console.log('Hello we are no logging\nfull body log:');
   console.log(req.body);
-  console.log(req.event);
+
+  console.log('log user profile:');
+  console.log(req.body.event.user.profile);
+
+  // required to return challenge for slack
   res.status(200).json({ challenge: req.body.challenge });
 });
 
