@@ -5,6 +5,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/slack-webhook-verify', (req, res) => {
+  console.log(req);
   console.log('Hello we are no logging\nfull body log:');
   console.log(req.body);
 
