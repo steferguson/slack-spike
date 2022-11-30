@@ -79,3 +79,7 @@ Go to [your apps](https://api.slack.com/apps) page displays all apps and allow y
 name `binding-account-spike` and deploy to `test-realm` workspace.
 
 With app id, you can visit [app detail page](https://api.slack.com/apps/A04D5J7REJG) which allows you to edit permissions
+
+With bot we can create slash commands.
+
+Go to [app page](https://api.slack.com/apps/A04D5J7REJG) then under `Features` click on `Slash Commands` and `Create new command`
