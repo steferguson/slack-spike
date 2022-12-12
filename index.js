@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { createHmac } = require('node:crypto');
+const { createHmac, timingSafeEqual } = require('node:crypto');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +42,9 @@ app.post('/slack-command-register', (req, res) => {
 
   console.log('isValid', valid);
 
+  const timingSafe = timingSafeEqual(hashedVal, slackSignature);
+
+  console.log('timingSafe', timingSafe);
   res.status(200).send('Thank you for registering!');
 });
 
