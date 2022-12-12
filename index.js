@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { createHmac } = require('node:crypto');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +21,26 @@ app.post('/slack-webhook-verify', (req, res) => {
 });
 
 app.post('/slack-command-register', (req, res) => {
+  const slackTimestamp = req.headers['X-Slack-Request-Timestamp'];
+  console.log('X-Slack-Request-Timestamp', slackTimestamp);
+
+  const slackSignature = req.header('X-Slack-Signature');
+  console.log('X-Slack-Signature', slackSignature);
   console.log(req.body);
+
+  // v0:123456789:command=/weather&text=94070
+  const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}`;
+  const slackSigningKey = process.env.SLACK_SIGNING_KEY;
+
+  const hmac = createHmac('sha256', slackSigningKey);
+
+  const data = hmac.update(str);
+
+  const hashedVal = data.digest('hex');
+
+  const valid = hashedVal === slackSignature;
+
+  console.log('isValid', valid);
 
   res.status(200).send('Thank you for registering!');
 });
