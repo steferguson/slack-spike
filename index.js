@@ -21,7 +21,7 @@ app.post('/slack-webhook-verify', (req, res) => {
 });
 
 app.post('/slack-command-register', (req, res) => {
-  const slackTimestamp = req.headers['X-Slack-Request-Timestamp'];
+  const slackTimestamp = req.header('X-Slack-Request-Timestamp');
   console.log('X-Slack-Request-Timestamp', slackTimestamp);
 
   const slackSignature = req.header('X-Slack-Signature');
@@ -42,9 +42,9 @@ app.post('/slack-command-register', (req, res) => {
 
   console.log('isValid', valid);
 
-  const timingSafe = timingSafeEqual(hashedVal, slackSignature);
+  // const timingSafe = timingSafeEqual(hashedVal, slackSignature);
 
-  console.log('timingSafe', timingSafe);
+  // console.log('timingSafe', timingSafe);
   res.status(200).send('Thank you for registering!');
 });
 
