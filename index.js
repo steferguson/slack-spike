@@ -29,7 +29,7 @@ app.post('/slack-command-register', (req, res) => {
   console.log('body:', req.body);
 
   // v0:123456789:command=/weather&text=94070
-  const str = `v0:${slackTimestamp}:${req.body}`;
+  const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
@@ -47,10 +47,11 @@ app.post('/slack-command-register', (req, res) => {
   console.log(fullHashedSignature);
   console.log(slackSignature);
 
-  const timingSafe = timingSafeEqual(
-    Buffer.from(fullHashedSignature, 'hex'),
-    Buffer.from(slackSignature, 'hex')
-  );
+  // const timingSafe = timingSafeEqual(
+  //   Buffer.from(fullHashedSignature, 'hex'),
+  //   Buffer.from(slackSignature, 'hex')
+  // );
+  const timingSafe = timingSafeEqual(fullHashedSignature, slackSignature);
 
   console.log('timingSafe', timingSafe);
   res.status(200).send('Thank you for registering!');
