@@ -29,7 +29,7 @@ app.post('/slack-command-register', (req, res) => {
   console.log('body:', req.body);
 
   // v0:123456789:command=/weather&text=94070
-  const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}no`;
+  const str = `v0:${slackTimestamp}:${req.body};nowhy.aren;t.you.broken`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
@@ -39,10 +39,6 @@ app.post('/slack-command-register', (req, res) => {
   const hashedVal = data.digest('hex');
 
   const fullHashedSignature = `v0=${hashedVal}`;
-
-  const valid = fullHashedSignature === slackSignature;
-
-  console.log('isValid', valid);
 
   console.log(fullHashedSignature);
   console.log(slackSignature);
