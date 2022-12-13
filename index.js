@@ -31,7 +31,7 @@ app.post('/slack-command-register', (req, res) => {
   const theBody = qs.stringify(req.body, { format: 'RFC1738' });
   console.log('body:', theBody);
 
-  const str = `v0:${slackTimestamp}:${theBody}n`;
+  const str = `v0:${slackTimestamp}:${theBody}`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
@@ -45,18 +45,13 @@ app.post('/slack-command-register', (req, res) => {
   console.log(fullHashedSignature);
   console.log(slackSignature);
 
-  try {
-    const timingSafe = timingSafeEqual(
-      Buffer.from(fullHashedSignature),
-      Buffer.from(slackSignature)
-    );
+  const timingSafe = timingSafeEqual(
+    Buffer.from(fullHashedSignature),
+    Buffer.from(slackSignature)
+  );
 
-    console.log('timingSafe', timingSafe);
-    res.status(200).send('Thank you for registering!');
-  } catch (error) {
-    console.log('nooooo', error);
-  }
-  res.status(400).send('oh no');
+  console.log('timingSafe', timingSafe);
+  res.status(200).send('Thank you for registering!');
 });
 
 app.all('/', (req, res) => {
