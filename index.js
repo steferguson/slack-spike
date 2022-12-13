@@ -26,25 +26,25 @@ app.post('/slack-command-register', (req, res) => {
 
   const slackSignature = req.header('X-Slack-Signature');
   console.log('X-Slack-Signature', slackSignature);
-  console.log(req.body);
+  console.log('body:', req.body);
 
   // v0:123456789:command=/weather&text=94070
   const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
-  console.log(slackSigningKey);
-  const hmac = createHmac('sha256', slackSigningKey);
-  console.log('after hmac, starting update');
-  const data = hmac.update(str);
 
-  console.log('data', data);
+  const hmac = createHmac('sha256', slackSigningKey);
+
+  const data = hmac.update(str);
 
   const hashedVal = data.digest('hex');
 
-  const valid = hashedVal === slackSignature;
+  const fullHashedSignature = `v0=${hashedVal}`;
+
+  const valid = fullHashedSignature === slackSignature;
 
   console.log('isValid', valid);
 
-  console.log(hashedVal);
+  console.log(fullHashedSignature);
   console.log(slackSignature);
 
   // const timingSafe = timingSafeEqual(hashedVal, slackSignature);
