@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const { createHmac, timingSafeEqual } = require('node:crypto');
+const qs = require('qs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,9 +27,11 @@ app.post('/slack-command-register', (req, res) => {
 
   const slackSignature = req.header('X-Slack-Signature');
   console.log('X-Slack-Signature', slackSignature);
-  console.log('body:', req.body);
 
-  const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}`;
+  const theBody = qs.stringify(req.body, { format: 'RFC1738' });
+  console.log('body:', theBody);
+
+  const str = `v0:${slackTimestamp}:${theBody}`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
