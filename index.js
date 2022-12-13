@@ -47,9 +47,12 @@ app.post('/slack-command-register', (req, res) => {
   console.log(fullHashedSignature);
   console.log(slackSignature);
 
-  // const timingSafe = timingSafeEqual(hashedVal, slackSignature);
+  const timingSafe = timingSafeEqual(
+    Buffer.from(fullHashedSignature, 'hex'),
+    Buffer.from(slackSignature, 'hex')
+  );
 
-  // console.log('timingSafe', timingSafe);
+  console.log('timingSafe', timingSafe);
   res.status(200).send('Thank you for registering!');
 });
 
