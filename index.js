@@ -33,14 +33,19 @@ app.post('/slack-command-register', (req, res) => {
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
-
+  console.log('after hmac, starting update');
   const data = hmac.update(str);
+
+  console.log('data', data);
 
   const hashedVal = data.digest('hex');
 
   const valid = hashedVal === slackSignature;
 
   console.log('isValid', valid);
+
+  console.log(hashedVal);
+  console.log(slackSignature);
 
   // const timingSafe = timingSafeEqual(hashedVal, slackSignature);
 
