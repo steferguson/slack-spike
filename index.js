@@ -31,7 +31,7 @@ app.post('/slack-command-register', (req, res) => {
   const theBody = qs.stringify(req.body, { format: 'RFC1738' });
   console.log('body:', theBody);
 
-  const str = `v0:${slackTimestamp}:${theBody}`;
+  const str = `v0:${slackTimestamp}:${theBody}n`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
 
   const hmac = createHmac('sha256', slackSigningKey);
