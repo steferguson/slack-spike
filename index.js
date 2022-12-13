@@ -31,7 +31,7 @@ app.post('/slack-command-register', (req, res) => {
   // v0:123456789:command=/weather&text=94070
   const str = `v0:${slackTimestamp}:${JSON.stringify(req.body)}`;
   const slackSigningKey = process.env.SLACK_SIGNING_KEY;
-
+  console.log(slackSigningKey);
   const hmac = createHmac('sha256', slackSigningKey);
   console.log('after hmac, starting update');
   const data = hmac.update(str);
