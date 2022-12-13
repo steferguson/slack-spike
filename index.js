@@ -44,8 +44,8 @@ app.post('/slack-command-register', (req, res) => {
   console.log(slackSignature);
 
   const timingSafe = timingSafeEqual(
-    Buffer.from(fullHashedSignature, 'hex'),
-    Buffer.from(slackSignature, 'hex')
+    Buffer.from(fullHashedSignature),
+    Buffer.from(slackSignature)
   );
 
   console.log('timingSafe', timingSafe);
