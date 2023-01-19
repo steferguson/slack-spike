@@ -28,6 +28,9 @@ app.post('/slack-command-register', (req, res) => {
   const slackSignature = req.header('X-Slack-Signature');
   console.log('X-Slack-Signature', slackSignature);
 
+  console.log('typeof body', typeof req.body);
+  console.log('body', req.body);
+  console.log('pasrse', JSON.parse(req.body));
   const theBody = qs.stringify(req.body, { format: 'RFC1738' });
   console.log('body:', theBody);
 
