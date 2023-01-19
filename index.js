@@ -4,7 +4,7 @@ const { createHmac, timingSafeEqual } = require('node:crypto');
 const qs = require('qs');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.post('/slack-webhook-verify', (req, res) => {
   console.log(req);
